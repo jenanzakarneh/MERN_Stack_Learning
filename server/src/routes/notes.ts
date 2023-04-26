@@ -1,14 +1,18 @@
 import express from 'express';
 import * as NoteConrollers from "../controlers/notes";
+import passport from 'passport';
+import "../passport";
+
+
 
 const router =express.Router();
 
-router.get('/',NoteConrollers.getNotes);
+router.get('/',passport.authenticate("jwt", { session: false }),NoteConrollers.getNotes);
 
-router.post("/",NoteConrollers.addNote);
+router.post("/",passport.authenticate("jwt", { session: false }),NoteConrollers.addNote);
 
-router.get ('/:noteId',NoteConrollers.getNote);
+router.get ('/:noteId',passport.authenticate("jwt", { session: false }),NoteConrollers.getNote);
 
-router.patch('/:noteId',NoteConrollers.updateNote);
-router.delete('/:noteId',NoteConrollers.deleteNote);
+router.patch('/:noteId',passport.authenticate("jwt", { session: false }),NoteConrollers.updateNote);
+router.delete('/:noteId',passport.authenticate("jwt", { session: false }),NoteConrollers.deleteNote);
 export default router;

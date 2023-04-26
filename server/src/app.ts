@@ -1,11 +1,22 @@
 import express, { NextFunction, Request,Response } from "express";
 import notesRoutes from "./routes/notes";
+import usersRoutes from "./routes/users";
 import morgan from 'morgan';
 import createHttpError ,{isHttpError}from "http-errors";
+import passport from "passport";
+import { config } from "./passport";
 const app = express();
 
+
+// Pass the global passport object into the configuration function
+config(passport);
+
+// This will initialize the passport object on every request
+app.use(passport.initialize());
 app.use(morgan('dev'));
 app.use(express.json());
+
+app.use("/api/users",usersRoutes);
 app.use("/api/notes",notesRoutes);
 
 app.use((req,res,next)=>{

@@ -3,5 +3,6 @@ import { str } from "envalid";
 import 'dotenv/config';
 export default cleanEnv(process.env,{
     MONGO_CONNECT_STRING: str(),
-    PORT: port()
-})
+    PORT: port(),
+    ACCESS_TOKEN_SECRET:str()
+});
